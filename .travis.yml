@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  - 0.10.25
+
+notifications:
+  email:
+    recipients:
+      - shane@shanetomlinson.com
+    on_success: change
+    on_failure: always
+
+before_install:
+  - npm install -g grunt-cli
+
+script:
+  - npm test
