@@ -44,7 +44,9 @@ Default value: `[]`
 Array of strings. Each value is the name of the npm module for the font-pack. Font packs must be installed via `npm install` before use.
 
 Example:
-   fontPacks: [ 'connect-fonts-firasans', 'connect-fonts-opensans' ]
+```
+fontPacks: [ 'connect-fonts-firasans', 'connect-fonts-opensans' ]
+```
 
 #### options.fontNames
 Type: `Array`
@@ -53,8 +55,9 @@ Default value: `[]`
 Array of strings. Each value is the name of the font to be included.
 
 Example:
-    fontNames: [ 'firasans-bold', 'firasans-light' ]
-
+```
+fontNames: [ 'firasans-bold', 'firasans-light' ]
+```
 #### options.languages
 Type: `Array`
 Default value: `[]`
@@ -62,19 +65,25 @@ Default value: `[]`
 Array of strings. Each value is the l10n name for the languages to generate CSS for.
 
 Example:
-    languages: [ 'en', 'de', 'es_MX', 'es_AR' ]
-
-#### options.userAgent
-Type: `String`
-Default value: `'all'`
-
-User agent to generate strings for. See https://github.com/shane-tomlinson/connect-fonts for how this can be used. Usually best to leave at `all`.
+```
+languages: [ 'en', 'de', 'es_MX', 'es_AR' ]
+```
 
 ### options.dest
 Type: `String`
 Default value: `'tmp'`
 
 Where to place the font files.
+Example:
+```
+dest: '.tmp/fonts'
+```
+
+#### options.userAgent
+Type: `String`
+Default value: `'all'`
+
+User agent to generate strings for. See https://github.com/shane-tomlinson/connect-fonts for how this can be used. Usually best to leave at `all`.
 
 ### Usage Examples
 
