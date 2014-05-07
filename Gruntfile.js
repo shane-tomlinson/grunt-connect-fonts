@@ -34,8 +34,7 @@ module.exports = function(grunt) {
         options: {
           fontPacks: ['connect-fonts-firasans'],
           fontNames: ['firasans-regular', 'firasans-light'],
-          languages: ['en', 'de'],
-          dest: ['tmp/default_options']
+          languages: ['en', 'de']
         }
       }
     },

@@ -29,7 +29,7 @@ grunt.initConfig({
       // Task-specific options go here.
     },
     your_target: {
-      // Target-specific file lists and/or options go here.
+      // Target-specific options go here.
     },
   },
 });
@@ -37,47 +37,60 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.fontPacks
+Type: `Array`
+Default value: `[]`
+
+Array of strings. Each value is the name of the npm module for the font-pack. Font packs must be installed via `npm install` before use.
+
+Example:
+   fontPacks: [ 'connect-fonts-firasans', 'connect-fonts-opensans' ]
+
+#### options.fontNames
+Type: `Array`
+Default value: `[]`
+
+Array of strings. Each value is the name of the font to be included.
+
+Example:
+    fontNames: [ 'firasans-bold', 'firasans-light' ]
+
+#### options.languages
+Type: `Array`
+Default value: `[]`
+
+Array of strings. Each value is the l10n name for the languages to generate CSS for.
+
+Example:
+    languages: [ 'en', 'de', 'es_MX', 'es_AR' ]
+
+#### options.userAgent
 Type: `String`
-Default value: `',  '`
+Default value: `'all'`
 
-A string value that is used to do something with whatever.
+User agent to generate strings for. See https://github.com/shane-tomlinson/connect-fonts for how this can be used. Usually best to leave at `all`.
 
-#### options.punctuation
-TyPe: `String`
-Default value: `'.'`
+### options.dest
+Type: `String`
+Default value: `'tmp'`
 
-A string value that is used to do something else with whatever else.
+Where to place the font files.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+#### Write fonts.css files to the `./tmp` directory
+
+In the following example, four subdirectories are created under the `/.tmp` directory: `en`, `de`, `es`, `es_MX`. Each subdirectory will contain a fonts.css containing `@font-face` CSS declarations for `firasans-bold` and `firasans-regular`.
 
 ```js
-grunt.initConfig({
-  connect_fonts: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
 grunt.initConfig({
   connect_fonts: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+      fontPacks: [ 'connect-fonts-firasans' ],
+      fontNames: [ 'firasans-bold', 'firasans-regular' ],
+      languages: [ 'en', 'de', 'es', 'es_MS' ]
+    }
   },
 });
 ```
