@@ -87,9 +87,9 @@ User agent to generate strings for. See https://github.com/shane-tomlinson/conne
 
 ### Usage Examples
 
-#### Write fonts.css files to the `./tmp` directory
+#### Write {{ locale name }}.css files to the `./tmp` directory
 
-In the following example, four subdirectories are created under the `/.tmp` directory: `en`, `de`, `es`, `es_MX`. Each subdirectory will contain a fonts.css containing `@font-face` CSS declarations for `firasans-bold` and `firasans-regular`.
+In the following example, four files are created under the `/.tmp` directory: `en.css`, `de.css`, `es.css`, `es_MX.css`. Each file contains `@font-face` CSS declarations for `firasans-bold` and `firasans-regular` that are tailored to that locale.
 
 ```js
 

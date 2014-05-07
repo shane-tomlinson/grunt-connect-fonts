@@ -30,12 +30,12 @@ exports.connect_fonts = {
   fonts_written: function(test) {
     test.expect(2);
 
-    var actualDE = grunt.file.read('tmp/de/fonts.css');
-    var expectedDE = grunt.file.read('test/expected/de/fonts.css');
+    var actualDE = grunt.file.read('tmp/de.css');
+    var expectedDE = grunt.file.read('test/expected/de.css');
     test.equal(actualDE, expectedDE, 'German fonts are created');
 
-    var actualEN = grunt.file.read('tmp/en/fonts.css');
-    var actualEN = grunt.file.read('test/expected/en/fonts.css');
+    var actualEN = grunt.file.read('tmp/en.css');
+    var actualEN = grunt.file.read('test/expected/en.css');
     test.equal(actualDE, expectedDE, 'English fonts are created');
 
     test.done();

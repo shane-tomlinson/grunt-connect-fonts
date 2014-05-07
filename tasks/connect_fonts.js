@@ -62,7 +62,7 @@ module.exports = function (grunt) {
   }
 
   function getDestPath(options, language) {
-    var destPath = options.dest + '/' + language + '/fonts.css';
+    var destPath = options.dest + '/' + language + '.css';
     return destPath;
   }
 };
