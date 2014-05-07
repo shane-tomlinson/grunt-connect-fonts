@@ -22,6 +22,9 @@
   "dependencies": {
     "connect-fonts": "1.0.0"
   },
+  "keywords": [
+    "gruntplugin"
+  ],
   "devDependencies": {
     "connect-fonts-firasans": "0.0.2",
     "grunt": "0.4.4",
