@@ -71,12 +71,12 @@ languages: [ 'en', 'de', 'es_MX', 'es_AR' ]
 
 ### options.dest
 Type: `String`
-Default value: `'tmp'`
+Default value: `'tmp/css'`
 
-Where to place the font files.
+Where to place the CSS files.
 Example:
 ```
-dest: '.tmp/fonts'
+dest: '.tmp/css'
 ```
 
 #### options.userAgent

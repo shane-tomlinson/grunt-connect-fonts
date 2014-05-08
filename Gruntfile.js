@@ -30,11 +30,19 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     connect_fonts: {
-      default_options: {
+      dist: {
         options: {
           fontPacks: ['connect-fonts-firasans'],
           fontNames: ['firasans-regular', 'firasans-light'],
           languages: ['en', 'de']
+        }
+      }
+    },
+
+    connect_fonts_copy: {
+      dist: {
+        options: {
+          fontPacks: ['connect-fonts-firasans']
         }
       }
     },
@@ -56,7 +64,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'connect_fonts', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'connect_fonts', 'connect_fonts_copy', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

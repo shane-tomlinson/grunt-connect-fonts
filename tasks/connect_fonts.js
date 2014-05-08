@@ -20,16 +20,14 @@ module.exports = function (grunt) {
       fontNames: [],
       languages: [],
       userAgent: 'all',
-      dest: 'tmp'
+      dest: 'tmp/css'
     });
 
     var fontPacks = loadFontPacks(options.fontPacks);
     var languages = [].concat(options.languages);
 
-    connectFonts.setup({
-      fonts: fontPacks,
-      'allow-origin': '*' // connect-fonts requires this even though
-                          // it is not serving the fonts.
+    var fontMiddleware = connectFonts.setup({
+      fonts: fontPacks
     });
 
     processNextLanguage();
@@ -39,16 +37,50 @@ module.exports = function (grunt) {
         return done();
       }
 
-      connectFonts.generate_css(options.userAgent, language, options.fontNames, function (err, css) {
-        if (err) {
-          return done(err);
-        }
+      fontMiddleware.generate_css(options.userAgent, language, options.fontNames, function (err, css) {
+        if (err) return done(err);
 
-        var destPath = getDestPath(options, language);
+        var destPath = getCssDestPath(options, language);
+
         grunt.log.writeln('writing to: ', destPath);
+
         grunt.file.write(destPath, css.css);
         processNextLanguage(languages, done);
       });
+    }
+  });
+
+  grunt.registerMultiTask('connect_fonts_copy', 'Copy web font files from npm packages to a destination.', function () {
+    var done = this.async();
+
+    var options = this.options({
+      fontPacks: [],
+      dest: 'tmp/fonts'
+    });
+
+    var destRoot = options.dest + '/';
+
+    var fontPacks = loadFontPacks(options.fontPacks);
+
+    var fontMiddleware = connectFonts.setup({
+      fonts: fontPacks
+    });
+
+    var urlToFontPaths = fontMiddleware.urlToPaths;
+    var urls = Object.keys(urlToFontPaths);
+
+    copyNextFont();
+    function copyNextFont() {
+      var url = urls.shift();
+      if (! url) return done();
+
+      var srcPath = urlToFontPaths[url];
+      var destPath = url.replace(/^\/fonts\//, destRoot);
+
+      grunt.log.writeln('copying `%s` to `%s`', srcPath, destPath);
+
+      grunt.file.copy(srcPath, destPath);
+      copyNextFont();
     }
   });
 
@@ -61,7 +93,7 @@ module.exports = function (grunt) {
     });
   }
 
-  function getDestPath(options, language) {
+  function getCssDestPath(options, language) {
     var destPath = options.dest + '/' + language + '.css';
     return destPath;
   }
