@@ -30,7 +30,6 @@ module.exports = function (grunt) {
       fonts: fontPacks
     });
 
-    processNextLanguage();
     function processNextLanguage() {
       var language = languages.shift();
       if (! language) {
@@ -38,7 +37,9 @@ module.exports = function (grunt) {
       }
 
       fontMiddleware.generate_css(options.userAgent, language, options.fontNames, function (err, css) {
-        if (err) return done(err);
+        if (err) {
+          return done(err);
+        }
 
         var destPath = getCssDestPath(options, language);
 
@@ -48,6 +49,7 @@ module.exports = function (grunt) {
         processNextLanguage(languages, done);
       });
     }
+    processNextLanguage();
   });
 
   grunt.registerMultiTask('connect_fonts_copy', 'Copy web font files from npm packages to a destination.', function () {
@@ -69,10 +71,11 @@ module.exports = function (grunt) {
     var urlToFontPaths = fontMiddleware.urlToPaths;
     var urls = Object.keys(urlToFontPaths);
 
-    copyNextFont();
     function copyNextFont() {
       var url = urls.shift();
-      if (! url) return done();
+      if (! url) {
+        return done();
+      }
 
       var srcPath = urlToFontPaths[url];
       var destPath = url.replace(/^\/fonts\//, destRoot);
@@ -82,6 +85,7 @@ module.exports = function (grunt) {
       grunt.file.copy(srcPath, destPath);
       copyNextFont();
     }
+    copyNextFont();
   });
 
   function loadFontPacks(fontPacks) {
