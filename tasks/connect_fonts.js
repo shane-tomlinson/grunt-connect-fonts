@@ -20,37 +20,51 @@ module.exports = function (grunt) {
       fontNames: [],
       languages: [],
       userAgent: 'all',
-      dest: 'tmp/css'
+      dest: 'tmp/css',
+      destFileName: getCssDestPath
     });
 
-    var fontPacks = loadFontPacks(options.fontPacks);
-    var languages = [].concat(options.languages);
+    options.dest = ensureTrailingSlash(options.dest);
 
     var fontMiddleware = connectFonts.setup({
-      fonts: fontPacks
+      fonts: loadFontPacks(options.fontPacks)
     });
 
-    function processNextLanguage() {
-      var language = languages.shift();
-      if (! language) {
-        return done();
+    generateCss(fontMiddleware, options, done);
+  });
+
+  function getCssDestPath(root, language) {
+    var destPath = root + language + '.css';
+    return destPath;
+  }
+
+  function ensureTrailingSlash(dest) {
+    if (! /\/$/.test(dest)) {
+      dest += '/';
+    }
+    return dest;
+  }
+
+  // Recursively generate the CSS files, one file per language.
+  function generateCss(fontMiddleware, options, done) {
+    var language = options.languages.shift();
+    if (! language) {
+      return done();
+    }
+
+    fontMiddleware.generate_css(options.userAgent, language, options.fontNames, function (err, css) {
+      if (err) {
+        return done(err);
       }
 
-      fontMiddleware.generate_css(options.userAgent, language, options.fontNames, function (err, css) {
-        if (err) {
-          return done(err);
-        }
+      var destPath = options.destFileName(options.dest, language);
 
-        var destPath = getCssDestPath(options, language);
+      grunt.log.writeln('writing to: ', destPath);
 
-        grunt.log.writeln('writing to: ', destPath);
-
-        grunt.file.write(destPath, css.css);
-        processNextLanguage(languages, done);
-      });
-    }
-    processNextLanguage();
-  });
+      grunt.file.write(destPath, css.css);
+      generateCss(fontMiddleware, options, done);
+    });
+  }
 
   grunt.registerMultiTask('connect_fonts_copy', 'Copy web font files from npm packages to a destination.', function () {
     var done = this.async();
@@ -60,32 +74,15 @@ module.exports = function (grunt) {
       dest: 'tmp/fonts'
     });
 
-    var destRoot = options.dest + '/';
-
-    var fontPacks = loadFontPacks(options.fontPacks);
-
     var fontMiddleware = connectFonts.setup({
-      fonts: fontPacks
+      fonts: loadFontPacks(options.fontPacks)
     });
 
-    var urlToFontPaths = fontMiddleware.urlToPaths;
-    var urls = Object.keys(urlToFontPaths);
+    var destRoot = options.dest + '/';
+    var files = toFiles(fontMiddleware.urlToPaths, destRoot);
 
-    function copyNextFont() {
-      var url = urls.shift();
-      if (! url) {
-        return done();
-      }
-
-      var srcPath = urlToFontPaths[url];
-      var destPath = url.replace(/^\/fonts\//, destRoot);
-
-      grunt.log.writeln('copying `%s` to `%s`', srcPath, destPath);
-
-      grunt.file.copy(srcPath, destPath);
-      copyNextFont();
-    }
-    copyNextFont();
+    copyFiles(files);
+    done();
   });
 
   function loadFontPacks(fontPacks) {
@@ -97,8 +94,29 @@ module.exports = function (grunt) {
     });
   }
 
-  function getCssDestPath(options, language) {
-    var destPath = options.dest + '/' + language + '.css';
-    return destPath;
+  function toFiles(urlToSrcPathMap, destRoot) {
+    var files = [];
+    for (var url in urlToSrcPathMap) {
+      var srcPath = urlToSrcPathMap[url];
+      // url will be of the form /fonts/{{ subset }}/{{ font_file }}.
+      // Replace the /fonts with the root dest.
+      var destPath = url.replace(/^\/fonts\//, destRoot);
+
+      files.push({
+        src: srcPath,
+        dest: destPath
+      });
+    }
+
+    return files;
   }
+
+  function copyFiles(files) {
+    files.forEach(function (file) {
+      grunt.log.writeln('copying `%s` to `%s`', file.src, file.dest);
+
+      grunt.file.copy(file.src, file.dest);
+    });
+  }
+
 };

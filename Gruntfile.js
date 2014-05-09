@@ -36,6 +36,17 @@ module.exports = function(grunt) {
           fontNames: ['firasans-regular', 'firasans-light'],
           languages: ['en', 'de']
         }
+      },
+      custom_filename: {
+        options: {
+          fontPacks: ['connect-fonts-firasans'],
+          fontNames: ['firasans-regular', 'firasans-light'],
+          languages: ['en', 'de'],
+          dest: 'tmp/custom_css_filename',
+          destFileName: function (root, language) {
+            return root + language + '/fonts.css';
+          }
+        }
       }
     },
 

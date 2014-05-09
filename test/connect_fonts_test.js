@@ -40,6 +40,19 @@ exports.connect_fonts = {
 
     test.done();
   },
+  css_written_custom_filename: function(test) {
+    test.expect(2);
+
+    var actualDE = grunt.file.read('tmp/custom_css_filename/de/fonts.css');
+    var expectedDE = grunt.file.read('test/expected/de.css');
+    test.equal(actualDE, expectedDE, 'German fonts are created');
+
+    var actualEN = grunt.file.read('tmp/custom_css_filename/en/fonts.css');
+    var expectedEN = grunt.file.read('test/expected/en.css');
+    test.equal(actualEN, expectedEN, 'English fonts are created');
+
+    test.done();
+  },
   fonts_copied: function(test) {
     test.expect(4);
 
