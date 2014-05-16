@@ -26,6 +26,11 @@ module.exports = function (grunt) {
 
     options.dest = ensureTrailingSlash(options.dest);
 
+    // create new arrays so that the original arrays are not modified.
+    options.fontPacks = [].concat(options.fontPacks);
+    options.fontNames = [].concat(options.fontNames);
+    options.languages = [].concat(options.languages);
+
     var fontMiddleware = connectFonts.setup({
       fonts: loadFontPacks(options.fontPacks)
     });
