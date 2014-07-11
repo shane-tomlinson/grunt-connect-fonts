@@ -22,34 +22,44 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
+function lineCompare(expected, actual, test, message) {
+  expected = expected.split('\n');
+  actual = actual.split('\n');
+
+  actual.forEach(function(actual, index) {
+    test.equal(actual, expected[index], message);
+  });
+
+}
+
 exports.connect_fonts = {
   setUp: function(done) {
     // setup here if necessary
     done();
   },
   css_written: function(test) {
-    test.expect(2);
+    test.expect(56);
 
     var actualDE = grunt.file.read('tmp/css/de.css');
     var expectedDE = grunt.file.read('test/expected/de.css');
-    test.equal(actualDE, expectedDE, 'German fonts are created');
+    lineCompare(expectedDE, actualDE, test, 'German');
 
     var actualEN = grunt.file.read('tmp/css/en.css');
     var expectedEN = grunt.file.read('test/expected/en.css');
-    test.equal(actualEN, expectedEN, 'English fonts are created');
+    lineCompare(expectedEN, actualEN, test, 'English');
 
     test.done();
   },
   css_written_custom_filename: function(test) {
-    test.expect(2);
+    test.expect(56);
 
     var actualDE = grunt.file.read('tmp/custom_css_filename/de/fonts.css');
     var expectedDE = grunt.file.read('test/expected/de.css');
-    test.equal(actualDE, expectedDE, 'German fonts are created');
+    lineCompare(expectedDE, actualDE, test, 'German');
 
     var actualEN = grunt.file.read('tmp/custom_css_filename/en/fonts.css');
     var expectedEN = grunt.file.read('test/expected/en.css');
-    test.equal(actualEN, expectedEN, 'English fonts are created');
+    lineCompare(expectedEN, actualEN, test, 'English');
 
     test.done();
   },
