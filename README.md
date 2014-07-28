@@ -204,7 +204,3 @@ This software is available under version 2.0 of the MPL:
 
   https://www.mozilla.org/MPL/
 
-## Release History
-
-0.0.4:
-  * Use the newest connect-fonts which adds the correct search parameter on SVG fonts.
