@@ -54,6 +54,7 @@ module.exports = function (grunt) {
   function generateCss(fontMiddleware, options, done) {
     var language = options.languages.shift();
     if (! language) {
+      grunt.log.ok('Connect fonts CSS has been generated.');
       return done();
     }
 
@@ -64,7 +65,7 @@ module.exports = function (grunt) {
 
       var destPath = options.destFileName(options.dest, language);
 
-      grunt.log.writeln('writing to: ', destPath);
+      grunt.verbose.writeln('Writing to: ', destPath);
 
       grunt.file.write(destPath, css.css);
       generateCss(fontMiddleware, options, done);
@@ -118,10 +119,11 @@ module.exports = function (grunt) {
 
   function copyFiles(files) {
     files.forEach(function (file) {
-      grunt.log.writeln('copying `%s` to `%s`', file.src, file.dest);
+      grunt.verbose.writeln('Copying `%s` to `%s`', file.src, file.dest);
 
       grunt.file.copy(file.src, file.dest);
     });
+    grunt.log.ok(files.length + ' ' + grunt.util.pluralize(files.length, 'file/files') + ' copied.');
   }
 
 };
