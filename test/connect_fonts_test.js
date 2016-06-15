@@ -38,7 +38,7 @@ exports.connect_fonts = {
     done();
   },
   css_written: function(test) {
-    test.expect(56);
+    test.expect(60);
 
     var actualDE = grunt.file.read('tmp/css/de.css');
     var expectedDE = grunt.file.read('test/expected/de.css');
@@ -51,7 +51,7 @@ exports.connect_fonts = {
     test.done();
   },
   css_written_custom_filename: function(test) {
-    test.expect(56);
+    test.expect(60);
 
     var actualDE = grunt.file.read('tmp/custom_css_filename/de/fonts.css');
     var expectedDE = grunt.file.read('test/expected/de.css');
@@ -64,13 +64,19 @@ exports.connect_fonts = {
     test.done();
   },
   fonts_copied: function(test) {
-    test.expect(4);
+    test.expect(8);
 
     test.ok(grunt.file.exists('tmp/fonts/default/firasans-light.woff'));
     test.ok(grunt.file.exists('tmp/fonts/default/firasans-regular.woff'));
 
+    test.ok(grunt.file.exists('tmp/fonts/default/firasans-light.woff2'));
+    test.ok(grunt.file.exists('tmp/fonts/default/firasans-regular.woff2'));
+
     test.ok(grunt.file.exists('tmp/fonts/latin/firasans-light.woff'));
     test.ok(grunt.file.exists('tmp/fonts/latin/firasans-regular.woff'));
+
+    test.ok(grunt.file.exists('tmp/fonts/latin/firasans-light.woff2'));
+    test.ok(grunt.file.exists('tmp/fonts/latin/firasans-regular.woff2'));
 
     test.done();
   },
