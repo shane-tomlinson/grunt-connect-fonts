@@ -8,6 +8,7 @@
        local('FiraSans-Regular'),
        url('/fonts/latin/firasans-regular.eot?#iefix') format('embedded-opentype'),
        url('/fonts/latin/firasans-regular.woff') format('woff'),
+       url('/fonts/latin/firasans-regular.woff2') format('woff2'),
        url('/fonts/latin/firasans-regular.ttf') format('truetype'),
        url('/fonts/latin/firasans-regular.svg#firasans-regular') format('svg');
 }
@@ -20,6 +21,7 @@
        local('FiraSans-Light'),
        url('/fonts/latin/firasans-light.eot?#iefix') format('embedded-opentype'),
        url('/fonts/latin/firasans-light.woff') format('woff'),
+       url('/fonts/latin/firasans-light.woff2') format('woff2'),
        url('/fonts/latin/firasans-light.ttf') format('truetype'),
        url('/fonts/latin/firasans-light.svg#firasans-light') format('svg');
 }
