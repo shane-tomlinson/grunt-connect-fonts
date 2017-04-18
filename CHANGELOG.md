@@ -1,5 +1,8 @@
 # Release History
 
+## 0.0.9:
+  * Update connect-fonts to 2.1.4
+
 ## 0.0.8:
   * Update connect-fonts to 2.1.3
 

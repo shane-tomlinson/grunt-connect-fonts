@@ -1,6 +1,6 @@
 {
   "name": "grunt-connect-fonts",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
     "connect-fonts": {
       "version": "2.1.4",
