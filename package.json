@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/shane-tomlinson/grunt-connect-fonts",
   "dependencies": {
-    "connect-fonts": "2.1.3"
+    "connect-fonts": "2.1.4"
   },
   "keywords": [
     "gruntplugin"
