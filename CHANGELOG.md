@@ -1,5 +1,10 @@
 # Release History
 
+## 0.1.0:
+  * Update all deps to their newest versions.
+  * Require node 6
+  * Add nsp to check for security problems.
+
 ## 0.0.9:
   * Update connect-fonts to 2.1.4
 
